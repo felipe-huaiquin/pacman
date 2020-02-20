@@ -1,0 +1,52 @@
+html{
+    margin: 0;
+    padding: 0;
+}
+
+.wall{
+    height: 40px;
+    width: 40px;
+    background-color: blue;
+    display: inline-block;
+}
+
+.blank{
+    height: 40px;
+    width: 40px;
+    background-color: black;
+    display: inline-block;
+
+}
+
+
+.dot{
+    height: 40px;
+    width: 40px;
+    background-color: black;
+    display: inline-block;
+}
+
+.ghost{
+    height: 40px;
+    width: 40px;
+    background-color: black;
+    display: inline-block;
+    background-size: contain;
+    background-image: url(ghost.gif);
+}
+
+.row{
+    line-height: 0;
+}
+
+#pacman{
+    background-color: black;
+    background-image: url(pacman.gif);
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    background-size: contain;
+    position: absolute;
+    /* left: 40px;
+    right: 40px;   */
+}
