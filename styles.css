@@ -18,6 +18,14 @@ html{
 
 }
 
+.blank2{
+    height: 40px;
+    width: 40px;
+    background-color: black;
+    display: inline-block;
+}
+
+
 
 .dot{
     height: 40px;
@@ -42,6 +50,18 @@ html{
 #pacman{
     background-color: black;
     background-image: url(pacman.gif);
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    background-size: contain;
+    position: absolute;
+    /* left: 40px;
+    right: 40px;   */
+}
+
+#ms_pacman{
+    background-color: black;
+    background-image: url(mspacman.gif);
     width: 40px;
     height: 40px;
     display: inline-block;
