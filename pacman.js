@@ -1,9 +1,11 @@
 var world = [
-    [0,0,0,0,0],
-    [0,1,2,2,0],
-    [0,2,0,4,0],
-    [0,2,2,3,0],
-    [0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,1,0,2,2,0,2,2,2,2,2,2,2,0],
+    [0,2,0,2,2,0,2,2,2,2,5,2,2,0],
+    [0,2,0,2,2,0,2,2,2,2,2,2,2,0],
+    [0,2,0,2,2,2,2,0,2,3,2,2,2,0],
+    [0,2,2,2,2,2,2,0,2,2,2,2,2,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 ];
 
 var worldClass = {
@@ -11,7 +13,8 @@ var worldClass = {
     1: 'blank',
     2: 'dot',
     3: 'ghost',
-    4: 'blank2'
+    4: 'blank2',
+    5: 'fruit'
 };
 
 var pacman = {
@@ -30,6 +33,8 @@ var ghost = {
 }
 
 var life = 3;
+
+var points_init= 0;
 
 window.onload = function(){
 
@@ -82,8 +87,8 @@ window.onload = function(){
         for(var i = 0; i < world.length; i++){
             for(var j=0; j < world[i].length; j++){
                 if(worldClass[world[i][j]]=='ghost'){
-                    ghost.x = i;
-                    ghost.y = j; 
+                    ghost.x = j;
+                    ghost.y = i; 
                 }
             }
         }
@@ -118,37 +123,55 @@ window.onload = function(){
         if(e.key == "ArrowLeft" && world[pacman.y][pacman.x - 1]!=0){
             pacman.x += -1;
         }
-        if(e.key == "ArrowRight" && world[pacman.y][pacman.x + 1]){
+        if(e.key == "ArrowRight" && world[pacman.y][pacman.x + 1]!=0){
             pacman.x += 1;
         }
-        if(e.key == "ArrowUp" && world[pacman.y -1][pacman.x]){
+        if(e.key == "ArrowUp" && world[pacman.y - 1][pacman.x]!=0){
             pacman.y += -1
         }
-        if(e.key == "ArrowDown" && world[pacman.y +1][pacman.x]){
+        if(e.key == "ArrowDown" && world[pacman.y + 1][pacman.x]!=0){
             pacman.y += 1
         }
 
         drawPacman();
         lifes();
-    }
+        points();
+        buildWorld();
+        console.log(world[pacman.y][pacman.x])
+    };
 
-    // function lifes(){
+    function ghostMovement(){
 
-        
-        
-    //     if(world[ghost.y][ghost.x]==world[pacman.y][pacman.x]){
-    //         life+= -1;
-    //         document.getElementById('lifes').innerHTML = remain_lifes;
-    //         if(life == 0){
-    //             var game_end = confirm("¿Deseas reiniciar el juego?")
-    //             if(game_end == true){
-    //                 location.reload
-    //             }
-    //         }
-    //     }
-    // }
+        var temp = "";
+
+        if(world[ghost.y - 1][ghost.x]!=0){
+            world[ghost.y][ghost.x] = 2;
+            ghost.y += -1
+            world[ghost.y][ghost.x] = 3;
+        };
+
+        drawGhost();
+        buildWorld();
+        setTimeout(ghostMovement,1000);
+    };
+
+    ghostMovement();
+
+    function points(){
+        var points_sofar = "<p> Points: " +points_init+ "</p>";
+        if(world[pacman.y][pacman.x]==2){
+            world[pacman.y][pacman.x]=1;
+            points_init +=10;
+        };
+        if(world[pacman.y][pacman.x]==5){
+            world[pacman.y][pacman.x]=1;
+            points_init +=50;
+        };
+
+        document.getElementById('points').innerHTML = points_sofar;
+    };
     
-    // lifes();
+    points();
 
     function lifes(){
         if(ghost.y == pacman.y && ghost.x==pacman.x){
